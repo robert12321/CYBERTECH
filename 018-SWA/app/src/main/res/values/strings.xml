@@ -1,0 +1,117 @@
+<resources>
+    <string name="app_name">SWA</string>
+
+    <string name="menu_title">Steering Wheel App</string>
+    <string name="drawer_open">Drawer open</string>
+    <string name="drawer_close">Drawer close</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_release">Release 1.0.0</string>
+    <string name="app_author">Daniel Wiekieta</string>
+    <string name="app_authContact">d.wiekieta@gmail.com</string>
+    <string name="main_devStatus">Device status</string>
+    <string name="main_devStatus_Sensors">Sensors</string>
+    <string name="noData">ND</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_sensors">Sensors</string>
+    <string name="menu_time">Time</string>
+    <string name="menu_csv">CSV Files</string>
+    <string name="menu_net">Network</string>
+    <string name="menu_about">About</string>
+    <string name="menu_devInfo">Device information</string>
+
+    <string name="title_home">General information</string>
+    <string name="title_sensors">Sensors manager</string>
+    <string name="title_csv">CSVManager</string>
+    <string name="title_csvLog">CSVLog</string>
+
+    <string name="deviceInfo_title2">Device sensors list</string>
+    <string name="deviceInfo_title3">Device sensors data</string>
+    <string name="deviceInfo_grav">Gravity sensor</string>
+    <string name="deviceInfo_mag">Magnetic Field sensor</string>
+    <string name="deviceInfo_inc">Inclination sensor</string>
+    <string name="deviceInfo_rot">Rotation sensor</string>
+    <string name="deviceInfo_orient">Orientation sensor</string>
+    <string name="deviceInfo_title3d">Device sensors delta</string>
+
+    <string name="csvApp_PATH">PATH</string>
+    <string name="sensorsApp_zeroButton">Set base position</string>
+    <string name="sensorsapp_startButton">Start capturing</string>
+    <string name="sensorsapp_stopButton">Stop capturing</string>
+    <string name="sensorsapp_STOPPED">STOPPED</string>
+    <string name="sensorsapp_UNCALIBRATED">ZERO</string>
+    <string name="sensorsapp_OK">OK</string>
+    <string name="menu_camera">Camera</string>
+    <string name="timeapp_deviceTime">Device time</string>
+    <string name="title_time">Time manager</string>
+    <string name="timeapp_networkTime">Network time</string>
+    <string name="timeapp_diffTime">Different time</string>
+    <string name="timeapp_startcapturing">Start capturing</string>
+    <string name="timeapp_stopcapturing">Stop capturing</string>
+    <string name="main_devStatus_Time">Time</string>
+    <string name="main_devStatus_CSVFile">CSVFile</string>
+    <string name="sensorsapp_UNSYNCHRONIZED">SYNC</string>
+    <string name="menu_gps">GPS</string>
+
+    <string name="CSVFile_errorMessage_RootPath">Root path is not established</string>
+    <string name="CSVFile_errorMessage_FileDirectory">File directory is not established</string>
+    <string name="CSVFile_errorMessage_FileCreated">File is not created</string>
+    <string name="CSVFile_errorMessage_ExternalStorage">External storage is not mounted</string>
+    <string name="CSVFile_errorMessage_FOSCreated">Output file is not created</string>
+    <string name="CSVFile_errorMessage_IsReadyToCapturing">Class is ready to capturing data</string>
+    <string name="CSVFile_errorMessage_IsNotReadyToCapturing">Class is not ready to capturing data</string>
+    <string name="CSVFile_errorMessage_IsCapturing">Class is capturing data</string>
+    <string name="CSVFile_status_status">FileCSV Status</string>
+    <string name="CSVFile_status_RunStatus">Run status</string>
+    <string name="CSVFile_status_Errors">Errors</string>
+    <string name="CSVFile_status_Path">Path</string>
+
+    <string name="CSVNode_Default">Default_</string>
+    <string name="CSVNode_errorMessage_FileIsNull">In this node DataFile does not exist</string>
+    <string name="CSVNode_status_ClassID">ClassID</string>
+    <string name="CSVNode_status_Status">CSVNode status</string>
+    <string name="CSVNode_status_id">ID</string>
+    <string name="CSVNode_status_Suffix">Suffix</string>
+
+    <string name="CSVModule_status_isEmpty">CSVModule is empty</string>
+
+    <string name="CSVManager_suffix_SensorsModule_raw">SensorsModuleRaw</string>
+    <string name="CSVManager_suffix_SensorsModule_relative">SensorsModuleRelative</string>
+    <string name="CSVManager_suffix_TimeModule_device">TimeModuleDevice</string>
+    <string name="CSVManager_suffix_TimeModule_network">TimeModuleNetwork</string>
+    <string name="CSVManager_errorMessage_SensorsModuleNotCapturing">Sensors module is activated and not set</string>
+    <string name="CSVManager_errorMessage_SensorsModuleAlias">Sensors module errors</string>
+    <string name="CSVManager_errorMessage_Alias">CSVManager errors</string>
+    <string name="CSVManager_errorMessage_noError">CSVManager is prepared</string>
+    <string name="CSVManager_errorMessage_TimeModuleNotCapturing">Time module is activated and not set</string>
+    <string name="CSVManager_errorMessage_TimeModuleAlias">Time module errors</string>
+    <string name="CSVManager_layout_CapturingSettings">Capturing settings</string>
+    <string name="CSVManager_layout_SensorsModule_PowerButton">Sensors</string>
+    <string name="CSVManager_layout_SensorsModule_RAWButton">RAW</string>
+    <string name="CSVManager_layout_SensorsModule_RelativeButton">Relative</string>
+    <string name="CSVManager_layout_SensorsModule_FullButton">Full</string>
+    <string name="CSVManager_layout_TimeModule_PowerButton">Time</string>
+    <string name="CSVManager_layout_TimeModule_DeviceButton">Device</string>
+    <string name="CSVManager_layout_TimeModule_NetworkButton">Network</string>
+    <string name="CSVManager_layout_TimeModule_FullButton">Full</string>
+    <string name="CSVManager_layout_CSVLogTextButton">CSVLog</string>
+    <string name="CSVManager_layout_CSVManagerTextButton">CSVManager</string>
+    <string name="CSVManager_layout_CapturingDirectory">Capturing directory</string>
+    <string name="CSVManager_layout_CapturingDefaultDirectory">SWAFiles</string>
+    <string name="CSVManager_layout_setCapturingDirectory">Set directory</string>
+    <string name="CSVManager_layout_changeCapturingDirectory">Change directory</string>
+
+    <string name="CSVManager_logLayout_title">CSVManager Log</string>
+    <string name="main_capturingButton_GoToCapturing">Capturing</string>
+    <string name="main_capturingButton_StartCapturing">Start capturing</string>
+    <string name="main_capturingButton_StopCapturing">Stop capturing</string>
+    <string name="capturingApp_label_GPS">GPS</string>
+    <string name="capturingApp_label_Time">Time</string>
+    <string name="capturingApp_label_Sensors">Sensors</string>
+    <string name="capturingApp_label_Network">Network</string>
+    <string name="title_capturing">Capturing manager</string>
+    <string name="deviceInfo_angle">Angle:</string>
+    <string name="deviceInfo_sampling">Sampling:</string>
+
+</resources>

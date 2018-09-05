@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home_id"
+            android:title="@string/menu_home"
+            android:icon="@drawable/ic_home_black_48dp">
+        </item>
+        <item
+            android:id="@+id/camera_id"
+            android:title="@string/menu_camera"
+            android:icon="@drawable/ic_camera_alt_black_48dp">
+        </item>
+        <item
+            android:id="@+id/csv_id"
+            android:title="@string/menu_csv"
+            android:icon="@drawable/ic_insert_drive_file_black_48dp">
+        </item>
+        <item
+            android:id="@+id/gps_id"
+            android:title="@string/menu_gps"
+            android:icon="@drawable/ic_gps_fixed_black_48dp">
+        </item>
+        <item
+            android:id="@+id/network_id"
+            android:title="@string/menu_net"
+            android:icon="@drawable/ic_share_black_48dp">
+        </item>
+        <item
+            android:id="@+id/sensors_id"
+            android:title="@string/menu_sensors"
+            android:icon="@drawable/ic_visibility_black_48dp">
+        </item>
+        <item
+            android:id="@+id/time_id"
+            android:title="@string/menu_time"
+            android:icon="@drawable/ic_access_time_black_48dp">
+        </item>
+
+    </group>
+
+    <item android:title="@string/menu_about">
+        <menu>
+            <item
+                android:id="@+id/device_id"
+                android:title="@string/menu_devInfo">
+            </item>
+        </menu>
+    </item>
+
+</menu>

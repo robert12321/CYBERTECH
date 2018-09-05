@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".CSVPackage.CSVFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/CSVManager_layout_CapturingSettings"
+                    android:textAppearance="@android:style/TextAppearance.Material.Display2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <Switch
+                            android:id="@+id/SensorsModule_PowerButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="false"
+                            android:onClick="activeModules"
+                            android:text="@string/CSVManager_layout_SensorsModule_PowerButton"
+                            android:textAlignment="viewStart"
+                            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                            tools:layout_editor_absoluteX="136dp"
+                            tools:layout_editor_absoluteY="299dp" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/SensorsModule_CapturingSelector"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="invisible"
+                        tools:layout_editor_absoluteX="8dp"
+                        tools:layout_editor_absoluteY="236dp">
+
+                        <RadioGroup
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            tools:layout_editor_absoluteX="73dp"
+                            tools:layout_editor_absoluteY="303dp">
+
+                            <RadioButton
+                                android:id="@+id/SensorsModule_RAWButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:onClick="sensorModuleSelector"
+                                android:text="@string/CSVManager_layout_SensorsModule_RAWButton" />
+
+                            <RadioButton
+                                android:id="@+id/SensorsModule_RelativeButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:onClick="sensorModuleSelector"
+                                android:text="@string/CSVManager_layout_SensorsModule_RelativeButton" />
+
+                            <RadioButton
+                                android:id="@+id/SensorsModule_FullButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:onClick="sensorModuleSelector"
+                                android:text="@string/CSVManager_layout_SensorsModule_FullButton" />
+
+                        </RadioGroup>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <Switch
+                            android:id="@+id/TimeModule_PowerButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="false"
+                            android:onClick="activeModules"
+                            android:text="@string/CSVManager_layout_TimeModule_PowerButton"
+                            android:textAlignment="viewStart"
+                            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                            tools:layout_editor_absoluteX="136dp"
+                            tools:layout_editor_absoluteY="299dp" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/TimeModule_CapturingSelector"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <RadioGroup
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            tools:layout_editor_absoluteX="73dp"
+                            tools:layout_editor_absoluteY="303dp">
+
+                            <RadioButton
+                                android:id="@+id/TimeModule_DeviceButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:onClick="timeModuleSelector"
+                                android:text="@string/CSVManager_layout_TimeModule_DeviceButton" />
+
+                            <RadioButton
+                                android:id="@+id/TimeModule_NetworkButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:onClick="timeModuleSelector"
+                                android:text="@string/CSVManager_layout_TimeModule_NetworkButton" />
+
+                            <RadioButton
+                                android:id="@+id/TimeModule_FullButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:onClick="timeModuleSelector"
+                                android:text="@string/CSVManager_layout_TimeModule_FullButton" />
+
+                        </RadioGroup>
+                    </TableRow>
+
+                </TableLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/CSVManager_layout_CapturingDirectory"
+                    android:textAppearance="@android:style/TextAppearance.Material.Display2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/CSVDirectoryInputText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:text="@string/CSVManager_layout_CapturingDefaultDirectory" />
+
+                    <Button
+                        android:id="@+id/CSVDirectoryInputButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="directoryButton"
+                        android:text="@string/CSVManager_layout_setCapturingDirectory" />
+
+                </TableRow>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/CSVLogTextButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="bottom|center_horizontal"
+            android:onClick="displayCSVLog"
+            android:text="@string/CSVManager_layout_CSVLogTextButton"
+            android:textAppearance="@android:style/TextAppearance.Material.Button"
+            android:textSize="24sp"
+            tools:layout_editor_absoluteY="120dp" />
+    </LinearLayout>
+</FrameLayout>

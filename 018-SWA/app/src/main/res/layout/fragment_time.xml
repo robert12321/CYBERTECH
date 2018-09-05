@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".TimePackage.TimeFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/timeapp_deviceTime"
+                android:textAppearance="@android:style/TextAppearance.Material.Large"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/devTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/noData"
+                android:textAlignment="center"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+            <TextView
+                android:id="@+id/netTimeLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/timeapp_networkTime"
+                android:textAppearance="@android:style/TextAppearance.Material.Large"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/netTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/noData"
+                android:textAlignment="center"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+            <TextView
+                android:id="@+id/diffTimeLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/timeapp_diffTime"
+                android:textAppearance="@android:style/TextAppearance.Material.Large"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/diffTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/noData"
+                android:textAlignment="center"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+            <Button
+                android:id="@+id/timeCapturingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onCaptureTimeButton"
+                android:text="@string/timeapp_startcapturing" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

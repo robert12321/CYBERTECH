@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RecordingVideo</string>
+    <string name="capture_video">Capture Video</string>
+    <string name="play_video">Play Video</string>
+    <string name="save_time_of_start">Save time of start</string>
+    <string name="time">Long.toString(unixTime)</string>
+</resources>
