@@ -1,9 +1,17 @@
 package pl.dwiekieta.swa;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.os.Environment;
 import android.os.PowerManager;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -17,9 +25,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
@@ -57,6 +72,15 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
     SensorData sensorData;
     CSVManager csvManager;
 
+    AlarmManager alarmManager;
+    PendingIntent pendingIntent;
+    BroadcastReceiver broadcastReceiver;
+    final static private long ONE_SECOND = 1000;
+    final static private long ONE_MINUTE = ONE_SECOND * 60;
+    final static private long ONE_HOUR = ONE_MINUTE * 60;
+    final static private long ONE_DAY = ONE_HOUR * 24;
+    final static private long TODAY = System.currentTimeMillis() - System.currentTimeMillis()%ONE_DAY - 2*ONE_HOUR;
+
     boolean isReadyToCapturing = false;
     boolean isCapturing = false;
 
@@ -75,10 +99,42 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
                 "MyApp::MyWakelockTag");
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         wakeLock.acquire();
 
         permission();
 
+        //        STARTING AT SPECIFIC TIME IN FILE /StartDir/Start.txt  //
+        setup();
+        //reading time from file
+        //long triggerUnixTime = TODAY + 21*ONE_HOUR + 15*ONE_MINUTE + 0*ONE_SECOND;
+        long triggerUnixTime = 0;
+        File RootPath = Environment.getExternalStorageDirectory();
+        String directory = "StartDir";
+        File StartDirectory = new File(RootPath.getAbsolutePath() + '/' + directory);
+        if(!StartDirectory.exists())
+            StartDirectory.mkdir();
+        File StartFile = new File(StartDirectory,"Start.txt");
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(StartFile));
+            String text = null;
+
+            if((text = reader.readLine()) != null) {
+                triggerUnixTime = Long.parseLong(text);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        alarmManager.setExact( AlarmManager.RTC_WAKEUP, triggerUnixTime ,pendingIntent );
         /*
         ------ CLASS ------
          */
@@ -180,8 +236,11 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
 
     @Override
     public final void onDestroy(){
-        super.onDestroy();
 
+        alarmManager.cancel(pendingIntent);
+
+        unregisterReceiver(broadcastReceiver);
+        super.onDestroy();
         timerThread().interrupt();
     }
 
@@ -525,6 +584,44 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
 
         capturingFragment.capturingButtonManager(MainActivity.this, false);
         isCapturing = csvManager.startCapturing();
+    }
+    private void setup() {
+
+        broadcastReceiver = new BroadcastReceiver() {
+
+            @Override
+
+            public void onReceive(Context c, Intent i) {
+                if (isReadyToCapturing) {
+                    if (isCapturing) {
+                        csvManager.stopCapturing();
+
+                        currentView = CurrentView.main;
+                        fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container, mainFragment);
+                        fragmentTransaction.commit();
+                        getSupportActionBar().setTitle(R.string.title_home);
+
+                        isCapturing = false;
+                        return;
+                    }
+
+
+                    capturingFragment.capturingButtonManager(MainActivity.this, false);
+                    isCapturing = csvManager.startCapturing();
+                }
+            }
+
+        };
+
+        registerReceiver(broadcastReceiver, new IntentFilter("a") );
+
+        pendingIntent = PendingIntent.getBroadcast( this, 0, new Intent("a"),
+                0 );
+
+        alarmManager = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
 
     }
+
 }
+

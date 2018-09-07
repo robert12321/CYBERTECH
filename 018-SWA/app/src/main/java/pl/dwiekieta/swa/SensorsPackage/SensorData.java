@@ -5,6 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.SystemClock;
 import android.util.Log;
 
 import java.util.Locale;
@@ -18,6 +19,7 @@ public class SensorData implements SensorEventListener {
     private static final float NS2S = 1.0f / 1000000000.0f;
     private long Timestamp;
     private long Sampling;
+
 
     private float[] mGravs;
     private float[] mGeoMags;
@@ -401,9 +403,8 @@ public class SensorData implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         // Reading frequency
-        Sampling = (event.timestamp - Timestamp)/1000;
-        Timestamp = event.timestamp ;
-
+        Sampling = (System.currentTimeMillis() - Timestamp);
+        Timestamp = System.currentTimeMillis();
         switch(event.sensor.getType()){
             case Sensor.TYPE_ACCELEROMETER:
                 this.set_mGravs(event.values);
