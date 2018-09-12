@@ -11,6 +11,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.PowerManager;
+import android.os.StrictMode;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -35,6 +36,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
@@ -80,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
     final static private long ONE_HOUR = ONE_MINUTE * 60;
     final static private long ONE_DAY = ONE_HOUR * 24;
     final static private long TODAY = System.currentTimeMillis() - System.currentTimeMillis()%ONE_DAY - 2*ONE_HOUR;
-
+    long triggerUnixTime;
     boolean isReadyToCapturing = false;
     boolean isCapturing = false;
 
@@ -95,7 +100,10 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
-
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
                 "MyApp::MyWakelockTag");
@@ -106,8 +114,12 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
 
         //        STARTING AT SPECIFIC TIME IN FILE /StartDir/Start.txt  //
         setup();
+
+
+
         //reading time from file
         //long triggerUnixTime = TODAY + 21*ONE_HOUR + 15*ONE_MINUTE + 0*ONE_SECOND;
+        /*
         long triggerUnixTime = 0;
         File RootPath = Environment.getExternalStorageDirectory();
         String directory = "StartDir";
@@ -133,8 +145,8 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        alarmManager.setExact( AlarmManager.RTC_WAKEUP, triggerUnixTime ,pendingIntent );
+        }*/
+
         /*
         ------ CLASS ------
          */
@@ -144,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
         sensorData.init(this);
 
         timeClass = new TimeClass();
-
 
         /*
         ------ THREADS ------
@@ -225,6 +236,10 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
                 return true;
             }
         });
+        //reading time from localhost
+        triggerUnixTime = sensorsFragment.getTimeFromLocalHost();
+        //triggerUnixTime = 1000;
+        alarmManager.setExact( AlarmManager.RTC_WAKEUP, triggerUnixTime ,pendingIntent );
     }
 
     @Override
@@ -301,7 +316,71 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
             }
         };
     }
+    public Long getTimeFromFile()
+    {
+        long time = 0;
+        File RootPath = Environment.getExternalStorageDirectory();
+        String directory = "StartDir";
+        File StartDirectory = new File(RootPath.getAbsolutePath() + '/' + directory);
+        if(!StartDirectory.exists())
+            StartDirectory.mkdir();
+        File StartFile = new File(StartDirectory,"Start.txt");
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(StartFile));
+            String text = null;
 
+            if((text = reader.readLine()) != null) {
+                triggerUnixTime = Long.parseLong(text);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return time;
+    }
+    public Long getTimeFromLocalHost()
+    {
+        //http://192.168.1.181:8000/Home.html
+        URL url = null;
+        try {
+            url = new URL("http://192.168.1.181:8000/Home.html");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        BufferedReader reader = null;
+        StringBuilder builder = new StringBuilder();
+        try {
+            reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
+            for (String line; (line = reader.readLine()) != null;) {
+                builder.append(line.trim());
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
+        }
+
+        String start = new String("<h1>");
+        String end = new String("</h1>");
+        if(builder.indexOf(start) < 0)
+        {
+            return Long.valueOf(1000000000);
+        }
+        String part = builder.substring(builder.indexOf(start) + start.length());
+        String time = part.substring(0, part.indexOf(end));
+        return  Long.getLong(time);
+
+    }
     public void CSVStatusEstablish(CSVManager csvManager){
         boolean errorState = false;
 

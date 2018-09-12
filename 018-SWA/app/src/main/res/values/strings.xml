@@ -113,5 +113,6 @@
     <string name="title_capturing">Capturing manager</string>
     <string name="deviceInfo_angle">Angle:</string>
     <string name="deviceInfo_sampling">Sampling:</string>
+    <string name="Start_time">Start time</string>
 
 </resources>
