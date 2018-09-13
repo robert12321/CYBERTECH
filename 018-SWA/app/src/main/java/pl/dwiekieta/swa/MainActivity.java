@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
             }
         });
         //reading time from localhost
-        triggerUnixTime = sensorsFragment.getTimeFromLocalHost();
+        triggerUnixTime = SensorsFragment.time;
         //triggerUnixTime = 1000;
         alarmManager.setExact( AlarmManager.RTC_WAKEUP, triggerUnixTime ,pendingIntent );
     }

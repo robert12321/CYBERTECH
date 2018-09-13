@@ -1,8 +1,13 @@
 package pl.dwiekieta.swa.SensorsPackage;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +20,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.DatagramSocket;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
+import java.net.NetworkInterface;
+import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+import java.util.Enumeration;
 import java.util.StringTokenizer;
 
 import pl.dwiekieta.swa.MainActivity;
@@ -34,7 +49,9 @@ import pl.dwiekieta.swa.R;
 public class SensorsFragment extends Fragment {
 
     private SensorListener mListener;
-    String testtt = String.valueOf(getTimeFromLocalHost());
+    static String adres = getAdres();
+    static public long time = getTimeFromLocalHost();
+    static public String timeStr = String.valueOf(time);
     TextView tv;
     View view;
     Button button;
@@ -118,7 +135,7 @@ public class SensorsFragment extends Fragment {
 
         tv = view.findViewById(R.id.start_time);
         //tv.setText(sensorData.get_sampling());
-        tv.setText(testtt);
+        tv.setText(timeStr);
     }
 
     public void setCaptureButton(Boolean state){
@@ -128,20 +145,23 @@ public class SensorsFragment extends Fragment {
         else
             button.setText(R.string.sensorsapp_stopButton);
     }
-    public Long getTimeFromLocalHost()
+    static public Long getTimeFromLocalHost()
     {
         //http://192.168.1.181:8000/Home.html
         URL url = null;
-        try {
-            url = new URL("http://192.168.1.181:8000/Home.html");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+
         BufferedReader reader = null;
         StringBuilder builder = new StringBuilder();
         try {
+            url = new URL(adres+"/Home.html");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            //url = new URL("http://192.168.1."+Integer.toString(i)+":8000/Home.html");
             reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-            for (String line; (line = reader.readLine()) != null;) {
+            for (String line; (line = reader.readLine()) != null; ) {
                 builder.append(line.trim());
             }
         } catch (UnsupportedEncodingException e) {
@@ -149,7 +169,10 @@ public class SensorsFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
+            if (reader != null) try {
+                reader.close();
+            } catch (IOException logOrIgnore) { }
+
         }
 
         String start = "<h1>";
@@ -167,4 +190,38 @@ public class SensorsFragment extends Fragment {
         return  Long.parseLong(time);
 
     }
+    static public boolean isServerReachable(String host) {
+
+        try
+        {
+            URL urlServer = new URL(host);
+            HttpURLConnection urlConn = (HttpURLConnection) urlServer.openConnection();
+                urlConn.setConnectTimeout(10); //<- 3Seconds Timeout
+                urlConn.connect();
+                if (urlConn.getResponseCode() == 200) {
+                    return true;
+                } else {
+                    return false;
+                }
+        } catch (MalformedURLException e1) {
+                return false;
+        } catch (IOException e) {
+                return false;
+        }
+
+    }
+    static String getAdres()
+    {
+        for(int i=0;i<256;i++)
+        {
+            for(int j=0;j<256;j++)
+            {
+                if (isServerReachable("http://192.168."+Integer.toString(i)+"." + Integer.toString(j) + ":8000")) {
+                    return "http://192.168."+Integer.toString(i)+"." + Integer.toString(j) + ":8000";
+                }
+            }
+        }
+        return "sad";
+    }
+
 }
