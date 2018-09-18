@@ -148,6 +148,8 @@ public class SensorsFragment extends Fragment {
     static public Long getTimeFromLocalHost()
     {
         //http://192.168.1.181:8000/Home.html
+        if(adres.equals("null"))
+            return Long.valueOf(1);
         URL url = null;
 
         BufferedReader reader = null;
@@ -221,7 +223,7 @@ public class SensorsFragment extends Fragment {
                 }
             }
         }
-        return "sad";
+        return "null";
     }
 
 }

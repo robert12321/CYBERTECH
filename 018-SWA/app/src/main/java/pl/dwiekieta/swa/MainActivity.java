@@ -346,41 +346,7 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
         }
         return time;
     }
-    public Long getTimeFromLocalHost()
-    {
-        //http://192.168.1.181:8000/Home.html
-        URL url = null;
-        try {
-            url = new URL("http://192.168.1.181:8000/Home.html");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        BufferedReader reader = null;
-        StringBuilder builder = new StringBuilder();
-        try {
-            reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-            for (String line; (line = reader.readLine()) != null;) {
-                builder.append(line.trim());
-            }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
-        }
-
-        String start = new String("<h1>");
-        String end = new String("</h1>");
-        if(builder.indexOf(start) < 0)
-        {
-            return Long.valueOf(1000000000);
-        }
-        String part = builder.substring(builder.indexOf(start) + start.length());
-        String time = part.substring(0, part.indexOf(end));
-        return  Long.getLong(time);
-
-    }
+    
     public void CSVStatusEstablish(CSVManager csvManager){
         boolean errorState = false;
 
