@@ -342,8 +342,8 @@ public class SensorData implements SensorEventListener {
                 mRotationMatrix[4], mRotationMatrix[5], mRotationMatrix[6], mRotationMatrix[7],
                 mRotationMatrix[8]);
         String orientation = String.format(Locale.US,"%.5f,%.5f,%.5f", mOrientation[0], mOrientation[1], mOrientation[2]);
-
-        return (gravity + ',' + magnetic + ',' + inclination + ',' + rotation + ',' + orientation );
+        String timestamp = Long.toString(Timestamp);
+        return (timestamp + ',' + gravity + ',' + magnetic + ',' + inclination + ',' + rotation + ',' + orientation );
     }
 
     public final String CSV_RelativeSensors(){
@@ -359,8 +359,7 @@ public class SensorData implements SensorEventListener {
         String orientation = String.format(Locale.US,"%.5f,%.5f,%.5f", dOrientation[0], dOrientation[1], dOrientation[2]);
         String angle = String.format(Locale.US,"%.5f", dAngle);
         String timestamp = Long.toString(Timestamp);
-        String sampling = Long.toString(Sampling);
-        return (timestamp + ',' + sampling + ',' + gravity + ',' + magnetic + ',' + inclination + ',' + rotation + ',' + orientation + ',' + angle );
+        return (timestamp + ',' + angle + ',' + gravity + ',' + magnetic + ',' + inclination + ',' + rotation + ',' + orientation  );
     }
 
     public void set_mGravs(float[] nGravs){

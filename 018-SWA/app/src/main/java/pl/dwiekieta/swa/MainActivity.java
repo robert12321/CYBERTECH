@@ -346,7 +346,7 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
         }
         return time;
     }
-    
+
     public void CSVStatusEstablish(CSVManager csvManager){
         boolean errorState = false;
 
