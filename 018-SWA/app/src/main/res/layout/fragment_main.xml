@@ -124,36 +124,16 @@
                     android:textAlignment="center"
                     android:textAppearance="@android:style/TextAppearance.Material.Medium" />
             </TableRow>
-
-        </LinearLayout>
-    </ScrollView>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1000" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
             <TextView
                 android:id="@+id/textView716"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAppearance="@android:style/TextAppearance.Material.Display2"
-                tools:text="Set start time (optional)" />
+                android:text="Set start time (optional)" />
 
             <TableRow
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
@@ -162,8 +142,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                    tools:text="Hour:" />
+                    android:gravity="right"
+                    android:text="Hour:"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
                 <EditText
                     android:id="@+id/startTimeHour"
@@ -175,7 +156,7 @@
             </TableRow>
 
             <TableRow
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
@@ -183,8 +164,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                    tools:text="Minute:" />
+                    android:gravity="right"
+                    android:text="Minute:"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
                 <EditText
                     android:id="@+id/startTimeMinute"
@@ -196,17 +178,19 @@
             </TableRow>
 
             <TableRow
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:gravity="left">
 
                 <TextView
                     android:id="@+id/textView717"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                    tools:text="Second:" />
+                    android:gravity="right"
+                    android:text="Second:"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
                 <EditText
                     android:id="@+id/startTimeSecond"
@@ -218,17 +202,19 @@
             </TableRow>
 
             <TableRow
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:gravity="left">
 
                 <TextView
                     android:id="@+id/textview321"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                    tools:text="Milisecond:" />
+                    android:gravity="right"
+                    android:text="Milisecond:"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
                 <EditText
                     android:id="@+id/startTimeMilisecond"
@@ -238,6 +224,7 @@
                     android:inputType="time" />
 
             </TableRow>
+
             <Button
                 android:id="@+id/setStartTimeButton"
                 android:layout_width="match_parent"
@@ -246,17 +233,23 @@
                 android:gravity="center"
                 android:onClick="setStartTime"
                 android:text="Set start time" />
-
+            <Button
+                android:id="@+id/home_CapturingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="homeCapturingButton"
+                android:text="@string/main_capturingButton_GoToCapturing" />
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/home_CapturingButton"
+    <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:onClick="homeCapturingButton"
-        android:text="@string/main_capturingButton_GoToCapturing" />
+        android:layout_weight="1000" />
+
+
+
 
 </LinearLayout>

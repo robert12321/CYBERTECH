@@ -99,12 +99,26 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
         EditText minuteEdTxt = findViewById(R.id.startTimeMinute);
         EditText secondEdTxt = findViewById(R.id.startTimeSecond);
         EditText milisecondEdTxt = findViewById(R.id.startTimeMilisecond);
-        int hour = Integer.parseInt(String.valueOf(hourEdTxt.getText()));
-        //int minute = Integer.parseInt(String.valueOf(hourEdTxt.getText()));
-        //int hour = Integer.parseInt(String.valueOf(hourEdTxt.getText()));
-        //int hour = Integer.parseInt(String.valueOf(hourEdTxt.getText()));
+        int hour=0;
+        int minute=0;
+        int second=0;
+        int milisecond=0;
+        if(!String.valueOf(hourEdTxt.getText()).equals(""))
+            hour = Integer.parseInt(String.valueOf(hourEdTxt.getText()));
+        if(!String.valueOf(minuteEdTxt.getText()).equals(""))
+            minute = Integer.parseInt(String.valueOf(minuteEdTxt.getText()));
+        if(!String.valueOf(secondEdTxt.getText()).equals(""))
+            second = Integer.parseInt(String.valueOf(secondEdTxt.getText()));
+        if(!String.valueOf(milisecondEdTxt.getText()).equals(""))
+            milisecond = Integer.parseInt(String.valueOf(milisecondEdTxt.getText()));
 
-        Toast.makeText(MainActivity.this,Integer.toString(hour),Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this,"Start time: "+String.valueOf(hour) + ":"+String.valueOf(minute) + ":"+String.valueOf(second)+":"+String.valueOf(milisecond),Toast.LENGTH_LONG).show();
+        triggerUnixTime = TODAY + hour*ONE_HOUR + minute*ONE_MINUTE + second*ONE_SECOND + milisecond;
+        Toast.makeText(MainActivity.this,"Start time (unix timestamp): "+String.valueOf(triggerUnixTime), Toast.LENGTH_SHORT).show();
+
+        alarmManager.setExact( AlarmManager.RTC_WAKEUP, triggerUnixTime ,pendingIntent );
+
+
     }
 
     private enum CurrentView {main, capturing, csv, sensors, time}
@@ -129,38 +143,6 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
 
         //        STARTING AT SPECIFIC TIME IN FILE /StartDir/Start.txt  //
         setup();
-
-
-
-        //reading time from file
-        //long triggerUnixTime = TODAY + 21*ONE_HOUR + 15*ONE_MINUTE + 0*ONE_SECOND;
-        /*
-        long triggerUnixTime = 0;
-        File RootPath = Environment.getExternalStorageDirectory();
-        String directory = "StartDir";
-        File StartDirectory = new File(RootPath.getAbsolutePath() + '/' + directory);
-        if(!StartDirectory.exists())
-            StartDirectory.mkdir();
-        File StartFile = new File(StartDirectory,"Start.txt");
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(StartFile));
-            String text = null;
-
-            if((text = reader.readLine()) != null) {
-                triggerUnixTime = Long.parseLong(text);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
 
         /*
         ------ CLASS ------
@@ -251,10 +233,7 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
                 return true;
             }
         });
-        //reading time from localhost
-        //triggerUnixTime = SensorsFragment.time;
-        triggerUnixTime = 1000;
-        alarmManager.setExact( AlarmManager.RTC_WAKEUP, triggerUnixTime ,pendingIntent );
+
     }
 
     @Override
