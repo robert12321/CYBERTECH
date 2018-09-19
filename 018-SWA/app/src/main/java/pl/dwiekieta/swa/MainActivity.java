@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -92,6 +93,20 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
     private int timerCycles = 0;
     private int Cycles =1000/30;
     private int viewRefresh = Cycles/5;
+
+    public void setStartTime(View view) {
+        EditText hourEdTxt =  findViewById(R.id.startTimeHour);
+        EditText minuteEdTxt = findViewById(R.id.startTimeMinute);
+        EditText secondEdTxt = findViewById(R.id.startTimeSecond);
+        EditText milisecondEdTxt = findViewById(R.id.startTimeMilisecond);
+        int hour = Integer.parseInt(String.valueOf(hourEdTxt.getText()));
+        //int minute = Integer.parseInt(String.valueOf(hourEdTxt.getText()));
+        //int hour = Integer.parseInt(String.valueOf(hourEdTxt.getText()));
+        //int hour = Integer.parseInt(String.valueOf(hourEdTxt.getText()));
+
+        Toast.makeText(MainActivity.this,Integer.toString(hour),Toast.LENGTH_SHORT).show();
+    }
+
     private enum CurrentView {main, capturing, csv, sensors, time}
     CurrentView currentView;
 
@@ -237,8 +252,8 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
             }
         });
         //reading time from localhost
-        triggerUnixTime = SensorsFragment.time;
-        //triggerUnixTime = 1000;
+        //triggerUnixTime = SensorsFragment.time;
+        triggerUnixTime = 1000;
         alarmManager.setExact( AlarmManager.RTC_WAKEUP, triggerUnixTime ,pendingIntent );
     }
 

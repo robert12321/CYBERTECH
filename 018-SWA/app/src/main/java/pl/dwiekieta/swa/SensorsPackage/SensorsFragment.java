@@ -49,9 +49,6 @@ import pl.dwiekieta.swa.R;
 public class SensorsFragment extends Fragment {
 
     private SensorListener mListener;
-    static String adres = getAdres();
-    static public long time = getTimeFromLocalHost();
-    static public String timeStr = String.valueOf(time);
     TextView tv;
     View view;
     Button button;
@@ -133,9 +130,6 @@ public class SensorsFragment extends Fragment {
         tv = view.findViewById(R.id.sens_angledd);
         tv.setText(sensorData.get_dAngle());
 
-        tv = view.findViewById(R.id.start_time);
-        //tv.setText(sensorData.get_sampling());
-        tv.setText(timeStr);
     }
 
     public void setCaptureButton(Boolean state){
@@ -145,85 +139,6 @@ public class SensorsFragment extends Fragment {
         else
             button.setText(R.string.sensorsapp_stopButton);
     }
-    static public Long getTimeFromLocalHost()
-    {
-        //http://192.168.1.181:8000/Home.html
-        if(adres.equals("null"))
-            return Long.valueOf(1);
-        URL url = null;
 
-        BufferedReader reader = null;
-        StringBuilder builder = new StringBuilder();
-        try {
-            url = new URL(adres+"/Home.html");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            //url = new URL("http://192.168.1."+Integer.toString(i)+":8000/Home.html");
-            reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-            for (String line; (line = reader.readLine()) != null; ) {
-                builder.append(line.trim());
-            }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) try {
-                reader.close();
-            } catch (IOException logOrIgnore) { }
-
-        }
-
-        String start = "<h1>";
-        String end = "</h1>";
-        if(builder.indexOf(start) < 0 )
-        {
-            return Long.valueOf(1000000000);
-        }
-        String part = builder.substring(builder.indexOf(start) + start.length());
-        if(!part.contains(end))
-        {
-            return Long.valueOf(1000000000);
-        }
-        String time = part.substring(0, part.indexOf(end));
-        return  Long.parseLong(time);
-
-    }
-    static public boolean isServerReachable(String host) {
-
-        try
-        {
-            URL urlServer = new URL(host);
-            HttpURLConnection urlConn = (HttpURLConnection) urlServer.openConnection();
-                urlConn.setConnectTimeout(10); //<- 3Seconds Timeout
-                urlConn.connect();
-                if (urlConn.getResponseCode() == 200) {
-                    return true;
-                } else {
-                    return false;
-                }
-        } catch (MalformedURLException e1) {
-                return false;
-        } catch (IOException e) {
-                return false;
-        }
-
-    }
-    static String getAdres()
-    {
-        for(int i=0;i<256;i++)
-        {
-            for(int j=0;j<256;j++)
-            {
-                if (isServerReachable("http://192.168."+Integer.toString(i)+"." + Integer.toString(j) + ":8000")) {
-                    return "http://192.168."+Integer.toString(i)+"." + Integer.toString(j) + ":8000";
-                }
-            }
-        }
-        return "null";
-    }
 
 }
