@@ -5,7 +5,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.SystemClock;
 import android.util.Log;
 
 import java.util.Locale;
@@ -194,9 +193,9 @@ public class SensorData implements SensorEventListener {
             }
         }
         if(dRotationMatrix[1]<0)
-            dAngle = (float) Math.acos(dRotationMatrix[0])*180/(float)Math.PI;
+            dAngle = (float) Math.acos(dRotationMatrix[4])*180/(float)Math.PI;
         else
-            dAngle = (float) - Math.acos(dRotationMatrix[0])*180/(float)Math.PI;
+            dAngle = (float) - Math.acos(dRotationMatrix[4])*180/(float)Math.PI;
         Mutex = true;
     }
 

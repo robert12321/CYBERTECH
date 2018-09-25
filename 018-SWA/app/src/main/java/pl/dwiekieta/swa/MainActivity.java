@@ -9,10 +9,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.os.Environment;
 import android.os.PowerManager;
 import android.os.StrictMode;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -30,21 +28,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.FieldPosition;
-import java.text.NumberFormat;
-import java.text.ParsePosition;
-import java.util.Locale;
 
 import pl.dwiekieta.swa.CSVPackage.CSVFragment;
 import pl.dwiekieta.swa.CSVPackage.CSVLogFragment;
@@ -310,36 +293,7 @@ public class MainActivity extends AppCompatActivity implements SensorsFragment.S
             }
         };
     }
-    public Long getTimeFromFile()
-    {
-        long time = 0;
-        File RootPath = Environment.getExternalStorageDirectory();
-        String directory = "StartDir";
-        File StartDirectory = new File(RootPath.getAbsolutePath() + '/' + directory);
-        if(!StartDirectory.exists())
-            StartDirectory.mkdir();
-        File StartFile = new File(StartDirectory,"Start.txt");
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(StartFile));
-            String text = null;
 
-            if((text = reader.readLine()) != null) {
-                triggerUnixTime = Long.parseLong(text);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return time;
-    }
 
     public void CSVStatusEstablish(CSVManager csvManager){
         boolean errorState = false;
